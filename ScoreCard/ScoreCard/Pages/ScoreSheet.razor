@@ -1,0 +1,42 @@
+﻿@inject IJSRuntime JSRuntime
+
+<button class="btn btn-secondary" @onclick="Save">Save</button>
+<button class="btn btn-secondary" @onclick="Read">Read</button>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Players</th>
+            @for (int round = 1; round <= Rounds; round++)
+            {
+                <th>Round @round</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+
+        @for (int p = 0; p < _players.Count; p++)
+        {
+            <tr>
+                <td>
+                    <div>
+                        @_players[p].Name
+                    </div>
+                    <div>
+                        Total: @_players[p].Scores.Sum();
+                    </div>
+                </td>
+
+                @for (int s = 0; s < _players[p].Scores.Count; s++)
+                {
+                    var s1 = s;
+                    var p1 = p;
+
+                    <td>
+                        <input @bind-value="@_players[p1].Scores[s1]" />
+                    </td>
+                }
+            </tr>
+        }
+
+    </tbody>
+</table>
