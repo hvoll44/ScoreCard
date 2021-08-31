@@ -16,7 +16,13 @@ namespace ScoreCard.Pages
         [Parameter]
         public int Rounds { get; set; } = 7;
 
-        protected override void OnParametersSet()
+        protected override async Task OnParametersSetAsync()
+        {
+            await Task.Run(SetPlayers);
+            await Read();
+        }
+
+        private void SetPlayers()
         {
             for (int i = 0; i < Players; i++)
             {
@@ -24,16 +30,37 @@ namespace ScoreCard.Pages
             }
         }
 
-        public async Task Save()
+        private async Task ClearAsync()
         {
-            var json = JsonSerializer.Serialize(_players);
-            await JSRuntime.InvokeVoidAsync("localStorage.setItem", "name", json);
+            _players = new List<Player>();
+            SetPlayers();
+            await Delete();
+        }
+
+        private async Task OnScoreChangedAsync()
+        {
+            await Save();
+        }
+
+        public async Task Delete()
+        {
+            await JSRuntime.InvokeAsync<string>("localStorage.removeItem", "name");
         }
 
         public async Task Read()
         {
             var json = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "name");
-            _players = JsonSerializer.Deserialize<List<Player>>(json);
+
+            if (json != null)
+            {
+                _players = JsonSerializer.Deserialize<List<Player>>(json);
+            }
+        }
+
+        public async Task Save()
+        {
+            var json = JsonSerializer.Serialize(_players);
+            await JSRuntime.InvokeVoidAsync("localStorage.setItem", "name", json);
         }
     }
 }
