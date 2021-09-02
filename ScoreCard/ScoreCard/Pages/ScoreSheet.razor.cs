@@ -30,6 +30,12 @@ namespace ScoreCard.Pages
             }
         }
 
+        private async Task AddPlayerAsync()
+        {
+            _players.Add(new Player($"Newb", Rounds));
+            await Save();
+        }
+
         private async Task ClearAsync()
         {
             _players = new List<Player>();
@@ -37,14 +43,14 @@ namespace ScoreCard.Pages
             await Delete();
         }
 
-        private async Task OnScoreChangedAsync()
-        {
-            await Save();
-        }
-
         public async Task Delete()
         {
             await JSRuntime.InvokeAsync<string>("localStorage.removeItem", "name");
+        }
+
+        private async Task OnChangedAsync()
+        {
+            await Save();
         }
 
         public async Task Read()

@@ -1,13 +1,36 @@
 ﻿@inject IJSRuntime JSRuntime
 
+<style>
+    .table-sticky {
+        position: sticky;
+    }
+
+    .score-cell {
+        width: 40px;
+        height: 30px;
+        border: none;
+    }
+
+    .player-cell {
+        width: 75px;
+        height: 30px;
+        border: none;
+    }
+
+    .subtext {
+        font-size: small;
+    }
+</style>
+
 <button class="btn btn-danger" @onclick="ClearAsync">Clear</button>
+
 <table class="table">
     <thead>
         <tr>
-            <th>Players</th>
+            <th class="table-sticky">Rounds</th>
             @for (int round = 1; round <= Rounds; round++)
             {
-                <th>Round @round</th>
+                <th>@round</th>
             }
         </tr>
     </thead>
@@ -15,25 +38,30 @@
 
         @for (int p = 0; p < _players.Count; p++)
         {
+            var p1 = p;
+
             <tr>
                 <td>
                     <div>
-                        @_players[p].Name
+                        <input @bind="@_players[p1].Name"
+                               @bind:event="oninput"
+                               @onchange="OnChangedAsync"
+                               class="player-cell" />
                     </div>
-                    <div>
-                        Total: @_players[p].Scores.Sum();
+                    <div class="subtext">
+                        Total: @_players[p].Scores.Sum()
                     </div>
                 </td>
 
                 @for (int s = 0; s < _players[p].Scores.Count; s++)
                 {
                     var s1 = s;
-                    var p1 = p;
 
                     <td>
                         <input @bind="@_players[p1].Scores[s1]"
                                @bind:event="oninput"
-                               @onchange="OnScoreChangedAsync" />
+                               @onchange="OnChangedAsync"
+                               class="score-cell" />
                     </td>
                 }
             </tr>
@@ -41,3 +69,5 @@
 
     </tbody>
 </table>
+
+<button class="btn btn-primary" @onclick="AddPlayerAsync">Add Player</button>
