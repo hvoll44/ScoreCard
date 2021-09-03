@@ -53,6 +53,7 @@ namespace ScoreCard.Pages
             await Save();
         }
 
+
         public async Task Read()
         {
             var json = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "name");

@@ -5,7 +5,7 @@ namespace ScoreCard.Pages
     public class Player
     {
         public string Name { get; set; }
-        public List<int> Scores { get; set; } = new List<int>();
+        public List<int?> Scores { get; set; } = new List<int?>();
 
         public Player(string name, int rounds)
         {
@@ -13,7 +13,7 @@ namespace ScoreCard.Pages
 
             for (int i = 0; i < rounds; i++)
             {
-                Scores.Add(0);
+                Scores.Add(null);
             }
         }
 

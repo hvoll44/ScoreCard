@@ -8,7 +8,6 @@
     .score-cell {
         width: 40px;
         height: 30px;
-        border: none;
     }
 
     .player-cell {
@@ -19,6 +18,18 @@
 
     .subtext {
         font-size: small;
+    }
+
+    input[type="text"] {
+        -webkit-box-sizing: border-box;
+    }
+
+    .table td {
+        padding: 0;
+    }
+
+    .main-column {
+        text-underline-position: under;
     }
 </style>
 
@@ -46,7 +57,7 @@
                         <input @bind="@_players[p1].Name"
                                @bind:event="oninput"
                                @onchange="OnChangedAsync"
-                               class="player-cell" />
+                               class="main-column" />
                     </div>
                     <div class="subtext">
                         Total: @_players[p].Scores.Sum()
@@ -57,7 +68,7 @@
                 {
                     var s1 = s;
 
-                    <td>
+                    <td score-cell>
                         <input @bind="@_players[p1].Scores[s1]"
                                @bind:event="oninput"
                                @onchange="OnChangedAsync"
