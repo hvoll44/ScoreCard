@@ -1,18 +1,28 @@
 ﻿@inject IJSRuntime JSRuntime
 
 <style>
-    .table-sticky {
-        position: sticky;
+    body {
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
     }
 
-    .score-cell {
-        width: 40px;
-        height: 30px;
+    tr {
+        border-bottom: 1px solid dodgerblue;
+    }
+
+    th {
+        text-align: center;
+    }
+
+    .header {
     }
 
     .player-cell {
-        width: 75px;
-        height: 30px;
+        width: 4rem;
+        border: none;
+    }
+
+    .player {
+        width: 4.5rem;
         border: none;
     }
 
@@ -20,25 +30,23 @@
         font-size: small;
     }
 
-    input[type="text"] {
-        -webkit-box-sizing: border-box;
+    .score-cell {
+        width: 2.5rem;
     }
 
-    .table td {
-        padding: 0;
-    }
-
-    .main-column {
-        text-underline-position: under;
+    .buttons {
+        margin: 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 10px;
     }
 </style>
 
-<button class="btn btn-danger" @onclick="ClearAsync">Clear</button>
-
-<table class="table">
+<table>
     <thead>
         <tr>
-            <th class="table-sticky">Rounds</th>
+            <th class="header"></th>
             @for (int round = 1; round <= Rounds; round++)
             {
                 <th>@round</th>
@@ -52,12 +60,12 @@
             var p1 = p;
 
             <tr>
-                <td>
+                <td class="player-cell">
                     <div>
                         <input @bind="@_players[p1].Name"
                                @bind:event="oninput"
                                @onchange="OnChangedAsync"
-                               class="main-column" />
+                               class="player" />
                     </div>
                     <div class="subtext">
                         Total: @_players[p].Scores.Sum()
@@ -80,5 +88,7 @@
 
     </tbody>
 </table>
-
-<button class="btn btn-primary" @onclick="AddPlayerAsync">Add Player</button>
+<div class="buttons">
+    <button class="btn btn-primary" @onclick="AddPlayerAsync">Add Player</button>
+    <button class="btn btn-danger" @onclick="ClearAsync">Clear</button>
+</div>
