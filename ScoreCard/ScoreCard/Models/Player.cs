@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ScoreCard.Pages
+namespace ScoreCard.Models
 {
     public class Player
     {

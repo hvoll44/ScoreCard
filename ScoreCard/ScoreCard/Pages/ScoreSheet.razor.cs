@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using System.Text.Json;
+using ScoreCard.Models;
 using System.Linq;
 
 namespace ScoreCard.Pages
@@ -23,6 +24,7 @@ namespace ScoreCard.Pages
             _rounds = Rounds;
             await Task.Run(SetPlayers);
             await Read();
+            _rounds = _players.OrderByDescending(p => p.Scores.Count).First().Scores.Count;
         }
 
         private void SetPlayers()
@@ -61,9 +63,9 @@ namespace ScoreCard.Pages
             await Delete();
         }
 
-        public async Task Delete()
+        private async Task Delete()
         {
-            await JSRuntime.InvokeAsync<string>("localStorage.removeItem", "name");
+            await JSRuntime.InvokeAsync<string>("localStorage.removeItem", "players");
         }
 
         private async Task OnChangedAsync()
@@ -76,14 +78,14 @@ namespace ScoreCard.Pages
             await Focus(id);
         }
 
-        public async Task Focus(string elementId)
+        private async Task Focus(string elementId)
         {
             await JSRuntime.InvokeVoidAsync("jsfunction.focusElement", elementId);
         }
 
-        public async Task Read()
+        private async Task Read()
         {
-            var json = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "name");
+            var json = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "players");
 
             if (json != null)
             {
@@ -91,10 +93,10 @@ namespace ScoreCard.Pages
             }
         }
 
-        public async Task Save()
+        private async Task Save()
         {
             var json = JsonSerializer.Serialize(_players);
-            await JSRuntime.InvokeVoidAsync("localStorage.setItem", "name", json);
+            await JSRuntime.InvokeVoidAsync("localStorage.setItem", "players", json);
         }
     }
 }
