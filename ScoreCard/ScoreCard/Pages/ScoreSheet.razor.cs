@@ -3,12 +3,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Text.Json;
+using System.Linq;
 
 namespace ScoreCard.Pages
 {
     public partial class ScoreSheet
     {
         private List<Player> _players = new List<Player>();
+        private int _rounds;
 
         [Parameter]
         public int Players { get; set; } = 3;
@@ -18,6 +20,7 @@ namespace ScoreCard.Pages
 
         protected override async Task OnParametersSetAsync()
         {
+            _rounds = Rounds;
             await Task.Run(SetPlayers);
             await Read();
         }
@@ -26,18 +29,33 @@ namespace ScoreCard.Pages
         {
             for (int i = 0; i < Players; i++)
             {
-                _players.Add(new Player($"Player{i + 1}", Rounds));
+                _players.Add(new Player($"Player{i + 1}", _rounds));
             }
         }
 
         private async Task AddPlayerAsync()
         {
-            _players.Add(new Player($"Newb", Rounds));
+            _players.Add(new Player($"Newb", _rounds));
+            await Save();
+        }
+
+        private async Task AddRoundsAsync()
+        {
+            _rounds++;
+            foreach (var player in _players)
+            {
+                while (player.Scores.Count < _rounds)
+                {
+                    player.Scores.Add(null);
+                }
+            }
+            StateHasChanged();
             await Save();
         }
 
         private async Task ClearAsync()
         {
+            _rounds = Rounds;
             _players = new List<Player>();
             SetPlayers();
             await Delete();

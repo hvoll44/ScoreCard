@@ -47,7 +47,7 @@
     <thead>
         <tr>
             <th class="header"></th>
-            @for (int round = 1; round <= Rounds; round++)
+            @for (int round = 1; round <= _rounds; round++)
             {
                 <th>@round</th>
             }
@@ -90,5 +90,6 @@
 </table>
 <div class="buttons">
     <button class="btn btn-primary" @onclick="AddPlayerAsync">Add Player</button>
+    <button class="btn btn-secondary" @onclick="AddRoundsAsync">Add Rounds</button>
     <button class="btn btn-danger" @onclick="ClearAsync">Clear</button>
 </div>

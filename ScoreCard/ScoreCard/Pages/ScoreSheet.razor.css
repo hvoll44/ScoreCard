@@ -1,0 +1,40 @@
+﻿body {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+}
+
+tr {
+    border-bottom: 1px solid dodgerblue;
+}
+
+th {
+    text-align: center;
+}
+
+.header {
+}
+
+.player-cell {
+    width: 4rem;
+    border: none;
+}
+
+.player {
+    width: 4.5rem;
+    border: none;
+}
+
+.subtext {
+    font-size: small;
+}
+
+.score-cell {
+    width: 2.5rem;
+}
+
+.buttons {
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 10px;
+}
