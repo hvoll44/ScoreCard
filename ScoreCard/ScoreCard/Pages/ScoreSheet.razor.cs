@@ -35,11 +35,11 @@ namespace ScoreCard.Pages
 
         private async Task AddPlayerAsync()
         {
-            _players.Add(new Player($"Newb", _rounds));
+            _players.Add(new Player($"Player{_players.Count + 1}", _rounds));
             await Save();
         }
 
-        private async Task AddRoundsAsync()
+        private async Task AddRoundAsync()
         {
             _rounds++;
             foreach (var player in _players)
