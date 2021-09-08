@@ -71,6 +71,15 @@ namespace ScoreCard.Pages
             await Save();
         }
 
+        private async Task OnPlayerBoxClicked(string id)
+        {
+            await Focus(id);
+        }
+
+        public async Task Focus(string elementId)
+        {
+            await JSRuntime.InvokeVoidAsync("jsfunction.focusElement", elementId);
+        }
 
         public async Task Read()
         {

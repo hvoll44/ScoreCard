@@ -60,12 +60,13 @@
             var p1 = p;
 
             <tr>
-                <td class="player-cell">
+                <td class="player-cell" @onclick="() => OnPlayerBoxClicked((p1 + 1).ToString())">
                     <div>
                         <input @bind="@_players[p1].Name"
                                @bind:event="oninput"
                                @onchange="OnChangedAsync"
-                               class="player" />
+                               class="player"
+                               id="@(p1 + 1)" />
                     </div>
                     <div class="subtext">
                         Total: @_players[p].Scores.Sum()
