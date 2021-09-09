@@ -28,6 +28,7 @@
 
     .subtext {
         font-size: small;
+        margin-left: 4px;
     }
 
     .score-cell {
@@ -40,6 +41,18 @@
         flex-direction: row;
         justify-content: flex-start;
         gap: 10px;
+    }
+
+    .inline-button {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
+    .delete-icon {
+        color: red;
+        margin: 5px 5px 0 0;
     }
 </style>
 
@@ -59,16 +72,21 @@
             var p1 = p;
 
             <tr>
-                <td class="player-cell" @onclick="() => OnPlayerBoxClicked((p1 + 1).ToString())">
-                    <div>
-                        <input @bind="@_players[p1].Name"
-                               @bind:event="oninput"
-                               @onchange="OnChangedAsync"
-                               class="player"
-                               id="@(p1 + 1)" />
-                    </div>
-                    <div class="subtext">
-                        Total: @_players[p].Scores.Sum()
+                <td>
+                    <div class="inline-button">
+                        <span class="oi oi-circle-x delete-icon" @onclick="() => DeletePlayer(p1)"></span>
+                        <div class="player-cell" @onclick="() => OnPlayerBoxClicked((p1 + 1).ToString())">
+                            <div>
+                                <input @bind="@_players[p1].Name"
+                                       @bind:event="oninput"
+                                       @onchange="OnChangedAsync"
+                                       class="player"
+                                       id="@(p1 + 1)" />
+                            </div>
+                            <div class="subtext">
+                                Total: @_players[p].Scores.Sum()
+                            </div>
+                        </div>
                     </div>
                 </td>
 

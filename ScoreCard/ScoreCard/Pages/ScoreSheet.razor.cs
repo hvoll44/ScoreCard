@@ -68,6 +68,14 @@ namespace ScoreCard.Pages
             await JSRuntime.InvokeAsync<string>("localStorage.removeItem", "players");
         }
 
+        private async Task DeletePlayer(int playerIndex)
+        {
+            if (_players.Count > 1)
+            {
+                _players.RemoveAt(playerIndex);
+            }
+        }
+
         private async Task OnChangedAsync()
         {
             await Save();
